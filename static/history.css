@@ -1,0 +1,42 @@
+body {
+    background-image: url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+nav {
+    font-family: serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.container {
+    margin-top: 50px;
+    align-items: center;
+    padding: 0px 300px 0 300px;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+    font-family: serif;
+}
+
+table tbody {
+    font-family: "Poppins";
+}

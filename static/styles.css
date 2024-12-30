@@ -1,0 +1,158 @@
+* {
+    font-family: serif;
+}
+
+body {
+    background-image: url("https://preview.colorlib.com/theme/bootstrap/login-form-20/images/bg.jpg.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 0px 300px 0 300px;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+.container {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 0 15px;
+}
+
+span {
+    color: #fff;
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+}
+
+header {
+    color: #fff;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    height: 50px;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    color: rgba(0, 0, 0);
+    padding: 0 0 0 45px;
+    background: rgba(255, 255, 255, 0.5);
+    font-family: 'Poppins';
+    font-size: 1rem;
+}
+
+i {
+    position: relative;
+    top: -33px;
+    left: 17px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.submit {
+    border: none;
+    border-radius: 30px;
+    font-size: 20px;
+    height: 50px;
+    outline: none;
+    width: 100%;
+    background: #fbceb5;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.submit {
+    box-shadow: 1px 5px 7 1px rgba(0, 0, 0, 0.2);
+}
+
+.bottom {
+    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: medium;
+    color: #000000;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.right {
+    text-align: center;
+}
+
+label {
+    margin-top: 5px;
+}
+
+label a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.3rem;
+}
+
+label a:hover {
+    color: #DAEDBD;
+}
+
+.center {
+    font-size: large;
+    text-align: center;
+    justify-content: space-between;
+    color: #fff;
+    margin-top: 20px;
+}
+
+@media screen and (max-width: 500px) {
+    .column {
+        flex-wrap: wrap;
+    }
+
+    body {
+        background-image: url("https://preview.colorlib.com/theme/bootstrap/login-form-20/images/bg.jpg.webp");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 0px 40px 0 40px;
+    }
+}
+
+.from .input-box {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form .input-box input {
+    margin-top: 8px;
+    position: relative;
+    height: 50px;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0 15px;
+
+}
+
+img {
+    margin: 150px 0 150px 0;
+}
