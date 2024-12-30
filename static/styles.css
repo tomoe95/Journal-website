@@ -1,5 +1,8 @@
 * {
-    font-family: serif;
+    font-family: 'Poppins', serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -8,13 +11,19 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-    padding: 0px 300px 0 300px;
+    padding: 0 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
+/* Centered container */
 .box {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     min-height: 90vh;
 }
 
@@ -22,47 +31,54 @@ body {
     width: 350px;
     display: flex;
     flex-direction: column;
-    padding: 0 15px 0 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    /* Subtle background for contrast */
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-span {
+/* Text styling */
+span,
+header {
     color: #fff;
-    font-size: large;
     display: flex;
     justify-content: center;
-    padding: 10px 0 10px 0;
+    padding: 10px 0;
 }
 
 header {
-    color: #fff;
-    font-size: 40px;
-    display: flex;
-    justify-content: center;
-    padding: 10px 0 10px 0;
+    font-size: 2.5rem;
+    font-weight: bold;
 }
 
+span {
+    font-size: 1rem;
+}
+
+/* Input fields styling */
 .input-field {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .input {
     height: 50px;
     width: 100%;
     border: none;
-    outline: none;
     border-radius: 30px;
-    color: rgba(0, 0, 0);
+    outline: none;
     padding: 0 0 0 45px;
     background: rgba(255, 255, 255, 0.5);
-    font-family: 'Poppins';
     font-size: 1rem;
+    color: rgba(0, 0, 0, 0.7);
 }
 
 i {
     position: relative;
-    top: -33px;
-    left: 17px;
+    top: -35px;
+    left: 15px;
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -70,89 +86,66 @@ i {
     color: rgba(0, 0, 0, 0.5);
 }
 
+/* Submit button */
 .submit {
     border: none;
     border-radius: 30px;
-    font-size: 20px;
+    font-size: 1.2rem;
     height: 50px;
     outline: none;
     width: 100%;
     background: #fbceb5;
+    color: #000;
     cursor: pointer;
-    transition: .3s;
+    transition: all 0.3s ease;
+    box-shadow: 1px 5px 7px rgba(0, 0, 0, 0.2);
 }
 
-.submit {
-    box-shadow: 1px 5px 7 1px rgba(0, 0, 0, 0.2);
+.submit:hover {
+    background: #fbb095;
+    transform: scale(1.05);
 }
 
+/* Bottom links */
 .bottom {
     text-align: center;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: medium;
-    color: #000000;
-    margin-top: 10px;
-    align-items: center;
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: #fff;
 }
 
-.right {
-    text-align: center;
-}
-
-label {
-    margin-top: 5px;
-}
-
-label a {
+.bottom a {
     color: #fff;
     text-decoration: none;
-    font-size: 1.3rem;
+    transition: color 0.3s ease;
 }
 
-label a:hover {
+.bottom a:hover {
     color: #DAEDBD;
 }
 
-.center {
-    font-size: large;
-    text-align: center;
-    justify-content: space-between;
-    color: #fff;
-    margin-top: 20px;
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 0 50px;
+    }
+
+    .container {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 500px) {
-    .column {
-        flex-wrap: wrap;
-    }
-
     body {
-        background-image: url("https://preview.colorlib.com/theme/bootstrap/login-form-20/images/bg.jpg.webp");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-        padding: 0px 40px 0 40px;
+        padding: 0 20px;
     }
-}
 
-.from .input-box {
-    width: 100%;
-    margin-top: 20px;
-}
+    .input {
+        font-size: 0.9rem;
+        padding-left: 35px;
+    }
 
-.form .input-box input {
-    margin-top: 8px;
-    position: relative;
-    height: 50px;
-    width: 100%;
-    outline: none;
-    border: none;
-    padding: 0 15px;
-
-}
-
-img {
-    margin: 150px 0 150px 0;
+    .submit {
+        font-size: 1rem;
+    }
 }

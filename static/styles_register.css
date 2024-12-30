@@ -1,9 +1,9 @@
+/* Global Styles */
 * {
-    font-family: serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: serif;
+    font-family: "Poppins", serif;
 }
 
 body {
@@ -15,59 +15,97 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 0px 300px 0 300px;
     justify-content: center;
+    padding: 0 300px;
 }
 
+/* Container Styles */
 .container {
-    position: relative;
-    max-width: 700px;
+    max-width: 600px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-}
-
-.container header {
-    font-size: 1.5rem;
-    color: #333;
-    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
 
-.container .form {
-    margin-top: 30px;
+.container header {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.form .input-box {
+/* Form Styles */
+.form {
+    margin-top: 10px;
+}
+
+.input-box {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
-.form .input-box input {
-    position: relative;
+.input-box input {
     height: 50px;
     width: 100%;
     outline: none;
     border: none;
     border-radius: 30px;
-    padding: 0 15px;
-    font-family: "Poppins";
+    padding: 0 20px;
     font-size: 1rem;
-    color: rgba(0, 0, 0);
-    margin-top: 8px;
-    background-color: rgba(255, 255, 255, 0.8)
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-.colmn .label {
+.input-box input:focus {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Button Styles */
+.form button {
+    height: 50px;
+    width: 100%;
+    background-color: #fbceb5;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 30px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+.form button:hover {
+    background-color: #f8b299;
+    cursor: pointer;
+    transform: translateY(-3px);
+}
+
+/* Label Styles */
+.label {
+    font-size: 1rem;
     text-align: center;
-    size: 20px;
+    margin-top: 10px;
+    color: #555;
 }
 
+/* Column Layout */
 .form .column {
     display: flex;
-    column-gap: 20px;
+    gap: 20px;
+    height: 60px;
+    flex-wrap: nowrap;
+}
+
+.form .column input {
+    flex: 1;
 }
 
 @media screen and (max-width: 500px) {
@@ -76,35 +114,19 @@ body {
     }
 
     body {
-        background-image: url("https://preview.colorlib.com/theme/bootstrap/login-form-20/images/bg.jpg.webp");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: 0px 30px 0 30px;
-        justify-content: center;
+        padding: 0 15px;
     }
 }
 
-.form button {
-    height: 55px;
-    width: 100%;
-    background-color: #fbceb5;
-    outline: none;
-    border: none;
-    border-radius: 30px;
-    padding: 0 15px;
-    margin-top: 80px;
-    font-size: 20px;
-}
-
-.form button:hover {
-    cursor: pointer;
-}
-
+/* Link Styles */
 a {
-    display: flex;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #f8b299;
 }

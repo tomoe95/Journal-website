@@ -48,7 +48,7 @@ def index():
             return apology("must provide correct year")
 
         db.execute("INSERT INTO journals (user_id, date, first, second, third) VALUES(?, ?, ?, ?, ?)",
-                   user_id, date, first, second, third)
+                    user_id, date, first, second, third)
 
     return redirect("/history")
 
@@ -79,17 +79,8 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        # Ensure username was submitted
-        if not username:
-            return apology("must provide username", 403)
-
-        # Ensure password was submitted
-        elif not password:
-            return apology("must provide password", 403)
-
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?",
-                          username)
+        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
@@ -122,12 +113,6 @@ def register():
         if len(check) != 0:
             return apology("username is already taken")
 
-        if password == '':
-            return apology("must provide password")
-
-        if confirm == '':
-            return apology("must provide password again")
-
         if password != confirm:
             return apology("could not confirm password")
 
@@ -137,7 +122,7 @@ def register():
         hash = generate_password_hash(password)
 
         db.execute("INSERT INTO users (first_name, last_name, birth, username, hash) VALUES(?, ?, ?, ?, ?)",
-                   first_name, last_name, birth, username, hash)
+                    first_name, last_name, birth, username, hash)
 
         return redirect("/login")
 
@@ -173,7 +158,7 @@ def reset_password():
         hash = generate_password_hash(password)
 
         db.execute("UPDATE users SET hash = ? WHERE username = ?",
-                   hash, username)
+                    hash, username)
 
         return redirect("/login")
 
