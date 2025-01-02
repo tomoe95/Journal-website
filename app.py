@@ -36,19 +36,18 @@ def index():
     user_id = session["user_id"]
 
     if request.method == "GET":
-        return render_template("journal.html")
+        return render_template("new_main_page.html")
 
     if request.method == "POST":
         date = request.form.get("date")
-        first = request.form.get("first")
-        second = request.form.get("second")
-        third = request.form.get("third")
+        feeling = request.form.get("feeling")
+        description = request.form.get("description")
 
         if len(date) != 10:
             return apology("must provide correct year")
 
-        db.execute("INSERT INTO journals (user_id, date, first, second, third) VALUES(?, ?, ?, ?, ?)",
-                    user_id, date, first, second, third)
+        db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?,?)",
+                    user_id, date, feeling, description)
 
     return redirect("/history")
 
@@ -59,7 +58,7 @@ def calendar():
     user_id = session["user_id"]
 
     data = db.execute(
-        "SELECT date, first, second, third FROM journals WHERE user_id = ? ORDER BY date desc", user_id)
+        "SELECT date, feeling, description FROM journals WHERE user_id = ? ORDER BY date desc", user_id)
     return render_template("history.html", data=data)
 
 
@@ -133,29 +132,23 @@ def reset_password():
         return render_template("forget.html")
 
     if request.method == "POST":
-
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        birth = request.form.get("birth")
         username = request.form.get("username")
-        password = request.form.get("password")
+        old_password = request.form.get("old_password")
+        new_password = request.form.get("new_password")
         confirm = request.form.get("confirm")
 
-        if password != confirm:
+        if new_password != confirm:
             return apology("could not confirm password")
 
-        if len(birth) != 10:
-            return apology("must provide correct year")
-
-        check = db.execute("SELECT * FROM users WHERE username = ?", username)
+        check = db.execute("SELECT username, hash FROM users WHERE username = ?", username)
 
         if len(check) != 1:
             return apology("username does not exist")
 
-        if not first_name and last_name and birth and username in check:
+        if not check_password_hash(check[0]["hash"], old_password) or username in check:
             return apology("user does not exist. is your information correct?")
 
-        hash = generate_password_hash(password)
+        hash = generate_password_hash(new_password)
 
         db.execute("UPDATE users SET hash = ? WHERE username = ?",
                     hash, username)

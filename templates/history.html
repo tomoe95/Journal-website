@@ -19,18 +19,16 @@ History
         <thead>
             <tr>
                 <th scope="col">date</th>
-                <th scope="col">First</th>
-                <th scope="col">Second</th>
-                <th scope="col">Third</th>
+                <th scope="col">feeling</th>
+                <th scope="col">description</th>
             </tr>
         </thead>
         <tbody>
             {% for row in data %}
             <tr>
                 <th scope="row">{{ row.date }}</th>
-                <td>{{ row.first }}</td>
-                <td>{{ row.second }}</td>
-                <td>{{ row.third }}</td>
+                <td>{{ row.feeling }}</td>
+                <td>{{ row.description }}</td>
             </tr>
             {% endfor %}
         </tbody>

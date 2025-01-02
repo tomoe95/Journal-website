@@ -1,0 +1,69 @@
+{% extends "layout1.html" %}
+
+{% block css_file %}
+<link href="/static/new_main_page.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+Your Journaling
+{% endblock %}
+
+{% block main %}
+
+    <header class="top-bar">
+            <div class="user-info">
+                <h1>Hello, [User's Name]</h1>
+                <p>Today's Date: <span id="today-date"></span></p>
+                <a class="nav-link" href="/logout">Log Out</a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Section 1: Input Today's Journaling -->
+            <section class="input-section">
+                <h2>Input Today's Journal</h2>
+                <form action="/" method="POST" class="journal-form">
+                    <label for="journal-date">Date:</label>
+                    <input type="date" id="journal-date" name="date" required>
+
+                    <label for="journal-feeling">Feeling:</label>
+                    <select id="journal-feeling" name="feeling" required>
+                        <option value="😊">😊 Happy</option>
+                        <option value="😢">😢 Sad</option>
+                        <option value="😡">😡 Angry</option>
+                        <option value="😌">😌 Relaxed</option>
+                    </select>
+
+                    <label for="journal-description">Description:</label>
+                    <textarea id="journal-description" name="description" rows="3" placeholder="Write about your day..." required></textarea>
+
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </section>
+
+            <!-- Section 2: Weekly and Monthly Recap -->
+            <section class="recap-section">
+                <h2>Weekly and Monthly Recap</h2>
+                <div class="recap-container">
+                    <div class="weekly-recap">
+                        <h3>Weekly Recap</h3>
+                        <canvas id="weekly-chart"></canvas>
+                    </div>
+                    <div class="monthly-recap">
+                        <h3>Monthly Recap</h3>
+                        <canvas id="monthly-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    <footer>
+        <p>© 2025 Journaling App. All Rights Reserved.</p>
+    </footer>
+
+
+    <script>
+        // Set today's date in the header
+        document.getElementById('today-date').innerText = new Date().toLocaleDateString();
+    </script>
+{% endblock %}
