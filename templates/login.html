@@ -9,12 +9,19 @@ Log In
 {% endblock %}
 
 {% block main %}
+
 <div class="box">
     <div class="container">
-        <div class="top-header">
-            <span>Have an account?</span>
-            <header>Log In</header>
+        <div class="title">
+            <h1>A Journey Through Your Days:</h1>
         </div>
+        <div class="title">
+            <div class="text">
+                <h1>One Line at a Time 🌸💭</h1>
+            </div>
+        </div>
+        <span>Have an account?</span>
+        <header>Log In</header>
         <form action="/login" method="POST">
             <div class="input-field">
                 <input autocomplete="off" autofocus type="text" class="input" placeholder="Username" name="username"
@@ -37,4 +44,6 @@ Log In
         </div>
     </div>
 </div>
+
+
 {% endblock %}
