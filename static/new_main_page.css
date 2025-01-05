@@ -1,132 +1,171 @@
+/* General Reset */
 * {
-    font-family: 'Poppins', serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    background-image: url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
+    background: linear-gradient(to bottom, #f8fbff, #e4f7fc);
+    color: #2c3e50;
     height: 100vh;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Container */
 .container {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1440px) {
-    body {
-        font-size: 14px;
-    }
-
-    .container {
-        padding: 20px;
-    }
-}
-
+/* Top Bar */
 header.top-bar {
     text-align: center;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(to right, #89CFF0, #FFC1CC);
+    color: #fff;
+    border-radius: 10px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-header .user-info h1 {
-    font-size: 2rem;
+header .user-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
 }
 
-header .user-info p {
+header .user-info h4 {
     font-size: 1.2rem;
+    opacity: 0.9;
 }
 
+/* Main Section */
 main {
-    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
+    background: #fff;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Input Section */
 .input-section {
+    flex: 1 1 60%;
+    max-width: 60%;
     margin-bottom: 30px;
 }
 
 .input-section h2 {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 1.8rem;
+    font-size: 2rem;
+    color: #F47A4D;
 }
 
 .journal-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .journal-form label {
     font-size: 1rem;
+    color: #2c3e50;
 }
 
 .journal-form input,
 .journal-form select,
 .journal-form textarea,
 .journal-form button {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
     font-size: 1rem;
+}
+
+.journal-form input:focus,
+.journal-form select:focus,
+.journal-form textarea:focus {
+    outline: none;
+    border-color: #89CFF0;
+    box-shadow: 0 0 10px rgba(137, 207, 240, 0.5);
 }
 
 .journal-form textarea {
     resize: none;
+    height: 100px;
 }
 
 .journal-form button {
-    background-color: #F79D65;
-    color: #000;
+    background: linear-gradient(to right, #F79D65, #F47A4D);
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .journal-form button:hover {
-    background-color: #F47A4D;
     transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Recap Section */
 .recap-section {
+    flex: 1 1 55%;
+    max-width: 55%;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin-top: 40px;
 }
 
 .recap-section h2 {
-    font-size: 1.8rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #F47A4D;
     margin-bottom: 20px;
 }
 
 .recap-container {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     gap: 20px;
 }
 
 .recap-container .weekly-recap,
 .recap-container .monthly-recap {
-    width: 45%;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width: 768px) {
+    .recap-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .recap-container .weekly-recap,
+    .recap-container .monthly-recap {
+        width: 48%;
+    }
 }
 
 /* Footer */
@@ -134,5 +173,6 @@ footer {
     text-align: center;
     margin-top: 20px;
     font-size: 1rem;
-    color: #fff;
+    color: #2c3e50;
+    opacity: 1;
 }

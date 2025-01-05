@@ -89,7 +89,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return render_template("new_main_page.html", username=username)
 
 
 @app.route("/register", methods=["GET", "POST"])
