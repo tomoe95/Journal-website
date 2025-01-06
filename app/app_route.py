@@ -1,9 +1,10 @@
 from cs50 import SQL
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, url_for, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required
+#from graph import graph
 
 # Configure application
 app = Flask(__name__)
@@ -18,6 +19,7 @@ Session(app)
 db = SQL("sqlite:///data.db")
 
 
+# Tell Flask to call the after_request function (@app <- use flask)
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
