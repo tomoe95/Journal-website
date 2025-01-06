@@ -1,10 +1,10 @@
 from cs50 import SQL
-from flask import Flask, redirect, render_template, url_for, request, session
+from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import apology, login_required
-#from graph import graph
+from graph import calculator_feelings
 
 # Configure application
 app = Flask(__name__)
@@ -38,6 +38,10 @@ def index():
     if request.method == "GET":
         return render_template("new_main_page.html")
 
+    weekly_feelings = calculator_feelings(user_id)
+    print(weekly_feelings)
+    #monthly_feelings = calculator_feelings(user_id, db)
+
     if request.method == "POST":
         date = request.form.get("date")
         feeling = request.form.get("feeling")
@@ -49,7 +53,7 @@ def index():
         db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?,?)",
                     user_id, date, feeling, description)
 
-    return redirect("/history")
+    return redirect("/")
 
 
 @app.route("/history")
