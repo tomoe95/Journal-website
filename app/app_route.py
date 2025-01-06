@@ -35,6 +35,9 @@ def index():
 
     user_id = session["user_id"]
 
+    weekly_feelings = calculator_feelings(user_id)
+    print(weekly_feelings)
+
     if request.method == "GET":
         return render_template("new_main_page.html")
 
@@ -53,7 +56,7 @@ def index():
         db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?,?)",
                     user_id, date, feeling, description)
 
-    return redirect("/")
+    return redirect("/", weekly_feelings=weekly_feelings)
 
 
 @app.route("/history")
