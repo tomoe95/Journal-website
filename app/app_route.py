@@ -1,5 +1,6 @@
+import os
 from cs50 import SQL
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, json, send_from_directory
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -35,15 +36,26 @@ def index():
 
     user_id = session["user_id"]
 
-    weekly_feelings = calculator_feelings(user_id)
-    print(weekly_feelings)
+    all_feelings = db.execute(
+        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc"
+        ,user_id)
+    weekly_feelings = db.execute(
+        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc LIMIT 7"
+    , user_id)
+
+
+    weekly_feelings = calculator_feelings(weekly_feelings)
+    all_feelings = calculator_feelings(all_feelings)
+
+    with open('weekly_feeling.json', 'w') as weekly_file:
+        json.dump(weekly_feelings, weekly_file)
+
+    with open('all_feeling.json', 'w') as all_file:
+        json.dump(all_feelings, all_file)
+
 
     if request.method == "GET":
         return render_template("new_main_page.html")
-
-    weekly_feelings = calculator_feelings(user_id)
-    print(weekly_feelings)
-    #monthly_feelings = calculator_feelings(user_id, db)
 
     if request.method == "POST":
         date = request.form.get("date")
@@ -56,8 +68,18 @@ def index():
         db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?,?)",
                     user_id, date, feeling, description)
 
-    return redirect("/", weekly_feelings=weekly_feelings)
+    return redirect("/")
 
+
+@app.route('/weekly_feeling.json')
+def weekly_feeling_data():
+    json_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    return send_from_directory(json_directory, 'weekly_feeling.json')
+
+@app.route('/all_feeling.json')
+def all_feeling_data():
+    json_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    return send_from_directory(json_directory, 'all_feeling.json')
 
 @app.route("/history")
 @login_required

@@ -1,28 +1,45 @@
 // Set today's date
 document.getElementById('today-date').innerText = new Date().toLocaleDateString();
 
+// get each elements
+const ctx_weekly = document.getElementById('weekly-chart').getContext('2d');
+const ctx_all = document.getElementById('all-chart').getContext('2d');
 
-document.addEventListener("DOMContentLoaded", () => {
-    const ctx_weekly = document.getElementById('weekly-chart').getContext('2d');
-    const ctx_monthly = document.getElementById('monthly-chart').getContext('2d');
+fetch('http://127.0.0.1:5001/weekly_feeling.json')
+    .then(response => response.json())
+    .then(data => {
+        const week_emoji = data.emoji
+        const week_numbers = data.numbers
+        const week_backgroundColor = data.backgroundColor
+        const week_borderColor = data.borderColor
 
-    const weeklyChart = new Chart(ctx_weekly, {
+        createChart(ctx_weekly, week_emoji, week_numbers, week_backgroundColor, week_borderColor);
+    })
+    .catch(error => console.error('Error emoji chart:', error))
+
+fetch('http://127.0.0.1:5001/all_feeling.json')
+    .then(response => response.json())
+    .then(data => {
+        const all_emoji = data.emoji
+        const all_numbers = data.numbers
+        const all_backgroundColor = data.backgroundColor
+        const all_borderColor = data.borderColor
+
+        createChart(ctx_all, all_emoji, all_numbers, all_backgroundColor, all_borderColor);
+    })
+    .catch(error => console.error('Error emoji chart:', error))
+
+
+function createChart(ctx, emoji, numbers, backgroundColor, borderColor) {
+    new Chart(ctx, {
         type: 'doughnut', // Specify chart type
         data: {
-            labels: ['Red', 'Blue', 'Yellow'], // Labels for chart segments
+            labels: emoji, // Labels for chart segments
             datasets: [{
-                label: 'My Dataset',
-                data: [300, 50, 100], // Values for each segment
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
+                label: 'My feeling',
+                data: numbers, // Values for each segment
+                backgroundColor: backgroundColor,
+                borderColor: borderColor,
                 borderWidth: 1
             }]
         },
@@ -35,34 +52,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-
-    const monthlyChart = new Chart(ctx_monthly, {
-        type: 'doughnut', // Specify chart type
-        data: {
-            labels: ['Red', 'Blue', 'Yellow'], // Labels for chart segments
-            datasets: [{
-                label: 'My Dataset',
-                data: [300, 50, 100], // Values for each segment
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top', // Position of the legend
-                },
-            }
-        }
-    });
-});
+}
