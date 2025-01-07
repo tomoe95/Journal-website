@@ -45,11 +45,25 @@ function createChart(ctx, emoji, numbers, backgroundColor, borderColor) {
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top', // Position of the legend
-                },
+            legend: {
+                position: 'top',
             }
-        }
-    });
+        },
+        plugins: [doughnutLabel]
+    })
+}
+
+const doughnutLabel = {
+    id: 'doughnutLabel',
+    beforeDatasetsDraw(chart, args, pluginOptions) {
+        const { ctx, data } = chart;
+
+        ctx.save()
+        const xCoor = chart.getDatasetMeta(0).data[0].x;
+        const yCoor = chart.getDatasetMeta(0).data[0].y;
+        ctx.font = '50px san-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseLine = 'middle';
+        ctx.fillText(data.labels[0], xCoor, yCoor);
+    }
 }
