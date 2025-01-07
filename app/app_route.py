@@ -65,7 +65,20 @@ def index():
         if len(date) != 10:
             return apology("must provide correct year")
 
-        db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?,?)",
+        check_date = db.execute(
+            "SELECT date FROM journals WHERE user_id = ?", user_id
+        )
+
+
+        for dates in check_date:
+            if date in dates['date']:
+                db.execute(
+                    "UPDATE journals SET feeling = ?, description = ? WHERE user_id = ? AND date = ?"
+                    ,feeling, description, user_id, date
+                )
+                return redirect("/")
+
+        db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?, ?)",
                     user_id, date, feeling, description)
 
     return redirect("/")
