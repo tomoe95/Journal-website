@@ -59,9 +59,11 @@ const doughnutLabel = {
         const { ctx, data } = chart;
 
         ctx.save()
+        chart.canvas.parentNode.style.height = '350px';
+        chart.canvas.parentNode.style.width = '350px';
         const xCoor = chart.getDatasetMeta(0).data[0].x;
         const yCoor = chart.getDatasetMeta(0).data[0].y;
-        ctx.font = '50px san-serif';
+        ctx.font = '60px san-serif';
         ctx.textAlign = 'center';
         ctx.textBaseLine = 'middle';
         ctx.fillText(data.labels[0], xCoor, yCoor);

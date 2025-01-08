@@ -7,10 +7,10 @@
 }
 
 body {
-    background: linear-gradient(to bottom, #f8fbff, #e4f7fc);
+    background: linear-gradient(to bottom, #E0F7FA, #FFF0F5);
     color: #2c3e50;
-    height: 100vh;
-    width: 100vw;
+    height: auto;
+    width: auto;
     display: flex;
     flex-direction: column;
 }
@@ -51,7 +51,7 @@ main {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    width: 100%;
+    width: 95%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -142,6 +142,7 @@ main {
 }
 
 .recap-container {
+    height: 350px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -170,9 +171,81 @@ main {
 
 /* Footer */
 footer {
+    margin-top: 8px;
     text-align: center;
-    margin-top: 20px;
     font-size: 1rem;
     color: #2c3e50;
     opacity: 1;
+    position: sticky;
+}
+
+/* History Section */
+.history-section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.history-section h2 {
+    font-size: 2rem;
+    color: #F47A4D;
+    margin-bottom: 20px;
+}
+
+.history-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.history-entry {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+}
+
+.history-entry .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.history-entry .entry-header h3 {
+    font-family: 'Lexend';
+    font-size: 1.5rem;
+    color: #2c3e50;
+}
+
+.history-entry .entry-header p {
+    font-size: 2.5rem;
+    color: #F47A4D;
+}
+
+.history-entry .entry-description {
+    font-size: 1rem;
+    color: #2c3e50;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+@media screen and (min-width: 768px) {
+    .history-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .history-entry {
+        width: 48%;
+    }
 }

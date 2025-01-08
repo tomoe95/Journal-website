@@ -40,23 +40,7 @@ def index():
     )
     username = username[0]['username']
 
-    all_feelings = db.execute(
-        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc"
-        ,user_id)
-    weekly_feelings = db.execute(
-        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc LIMIT 7"
-    , user_id)
-
-
-    weekly_feelings = calculator_feelings(weekly_feelings)
-    all_feelings = calculator_feelings(all_feelings)
-
-    with open('weekly_feeling.json', 'w') as weekly_file:
-        json.dump(weekly_feelings, weekly_file)
-
-    with open('all_feeling.json', 'w') as all_file:
-        json.dump(all_feelings, all_file)
-
+    getData(user_id)
 
     if request.method == "GET":
         return render_template("new_main_page.html", username=username)
@@ -102,10 +86,14 @@ def all_feeling_data():
 @login_required
 def calendar():
     user_id = session["user_id"]
+    username = db.execute(
+        "SELECT username FROM users WHERE id = ?", user_id
+    )
+    username = username[0]['username']
 
     data = db.execute(
         "SELECT date, feeling, description FROM journals WHERE user_id = ? ORDER BY date desc", user_id)
-    return render_template("history.html", data=data)
+    return render_template("history.html", data=data, username=username)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -133,6 +121,8 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        user_id = session["user_id"]
+        getData(user_id)
 
         # Redirect user to home page
         return render_template("new_main_page.html", username=username)
@@ -206,3 +196,22 @@ def reset_password():
 def logout():
     session.clear()
     return redirect("/")
+
+
+def getData(user_id):
+    all_feelings = db.execute(
+        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc"
+        ,user_id)
+    weekly_feelings = db.execute(
+        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc LIMIT 7"
+    , user_id)
+
+
+    weekly_feelings = calculator_feelings(weekly_feelings)
+    all_feelings = calculator_feelings(all_feelings)
+
+    with open('weekly_feeling.json', 'w') as weekly_file:
+        json.dump(weekly_feelings, weekly_file)
+
+    with open('all_feeling.json', 'w') as all_file:
+        json.dump(all_feelings, all_file)

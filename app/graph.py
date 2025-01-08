@@ -45,3 +45,4 @@ def calculator_feelings(feelings):
         'borderColor': borderColor
     }
     return result
+

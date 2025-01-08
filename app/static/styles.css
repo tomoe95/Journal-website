@@ -17,6 +17,13 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+/* title on login page */
+h1.special-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 50px;
+    font-weight: bold;
+    padding: 20px 0 20px 0;
+}
 
 /* Centered container */
 .box {
@@ -55,8 +62,8 @@ body {
     white-space: nowrap;
     overflow: hidden;
     animation:
-        typing 1.3s steps(21),
-        cursor 0.4s step-end infinite alternate;
+        typing 1.8s steps(39),
+        cursor 0.5s step-end infinite alternate;
 }
 
 @keyframes cursor {

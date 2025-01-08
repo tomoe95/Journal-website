@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Coompatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="/static/journaling.ico" rel="icon">
+    <link href="/static/journalMuse.ico" rel="icon">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -16,14 +16,24 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair Display" rel="stylesheet">
 
     <title>{% block title %}{% endblock %}</title>
+
+    <style>
+        .navbar-brand {
+            font-family: 'Playfair Display';
+            font-weight: bold;
+            font-size: 25px;
+        }
+    </style>
+
 </head>
 
 <body>
     <nav class="bg-light border navbar navbar-expand-md navbar-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Journaling App</a>
+            <a class="navbar-brand" href="/">JournalMuse</a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
                 data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
