@@ -35,6 +35,10 @@ def after_request(response):
 def index():
 
     user_id = session["user_id"]
+    username = db.execute(
+        "SELECT username FROM users WHERE id = ?", user_id
+    )
+    username = username[0]['username']
 
     all_feelings = db.execute(
         "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc"
@@ -55,7 +59,7 @@ def index():
 
 
     if request.method == "GET":
-        return render_template("new_main_page.html")
+        return render_template("new_main_page.html", username=username)
 
     if request.method == "POST":
         date = request.form.get("date")
