@@ -62,7 +62,7 @@ h1.special-title {
     white-space: nowrap;
     overflow: hidden;
     animation:
-        typing 1.8s steps(39),
+        typing 1.8s steps(41),
         cursor 0.5s step-end infinite alternate;
 }
 

@@ -47,6 +47,15 @@ function createChart(ctx, emoji, numbers, backgroundColor, borderColor) {
             responsive: true,
             legend: {
                 position: 'top',
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 25
+                        }
+                    }
+                }
             }
         },
         plugins: [doughnutLabel]
@@ -62,7 +71,7 @@ const doughnutLabel = {
         chart.canvas.parentNode.style.height = '350px';
         chart.canvas.parentNode.style.width = '350px';
         const xCoor = chart.getDatasetMeta(0).data[0].x;
-        const yCoor = chart.getDatasetMeta(0).data[0].y;
+        const yCoor = chart.getDatasetMeta(0).data[0].y + 7;
         ctx.font = '60px san-serif';
         ctx.textAlign = 'center';
         ctx.textBaseLine = 'middle';
