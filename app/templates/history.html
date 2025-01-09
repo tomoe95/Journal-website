@@ -26,10 +26,10 @@ Your Journal History
             {% for entry in data %}
             <div class="history-entry">
                 <div class="entry-header">
-                    <h3>{{ entry.date }}</h3>
-                    <p>{{ entry.feeling }}</p>
+                    <h3>{{ entry[0] }}</h3>
+                    <p>{{ entry[1] }}</p>
                 </div>
-                <p class="entry-description">{{ entry.description }}</p>
+                <p class="entry-description">{{ entry[2] }}</p>
             </div>
             {% endfor %}
         </div>
@@ -37,7 +37,7 @@ Your Journal History
 </main>
 
 <footer>
-    <p>© 2025 JournalMuse. Have a great day, {{ username }}! 🌈</p>
+    <p>© 2025 JournalMuse. Have a great day, {{ username[0] }}! 🌈</p>
 </footer>
 
 {% endblock %}

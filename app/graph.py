@@ -11,12 +11,18 @@ def calculator_feelings(feelings):
     borderColor = []
     result = {}
 
-    for feeling in feelings:
-        # feeling['feeling'] <- get emoji (value) of dictionary ({'feeling' : 'emoji'})
-        if feeling['feeling'] in feelings_dict:
-            feelings_dict[feeling['feeling']] += 1
-        else:
-            feelings_dict[feeling['feeling']] = 1
+    # Get only emoji from ('emoji',) and put it in dictionary
+    i = 0
+    while i < len(feelings):
+        j = 0
+        while j < len(feelings[i]):
+            face = feelings[i][j]
+            if face in feelings_dict:
+                feelings_dict[face] += 1
+            else:
+                feelings_dict[face] = 1
+            j += 1
+        i += 1
 
     sorted_dict = {}
     for key, value in sorted(feelings_dict.items(), key=lambda x: (-x[1], x[0])):
@@ -45,4 +51,3 @@ def calculator_feelings(feelings):
         'borderColor': borderColor
     }
     return result
-

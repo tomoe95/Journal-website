@@ -1,6 +1,6 @@
 import os
-from cs50 import SQL
-from flask import Flask, redirect, render_template, request, session, json, send_from_directory
+import sqlite3
+from flask import Flask, g, redirect, render_template, request, session, json, send_from_directory
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -16,8 +16,20 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///data.db")
+
+# a connection to the SQLite database is created and stored in g (Flask's global object).
+def get_db():
+    if "db" not in g:
+        g.db = sqlite3.connect("data.db", check_same_thread=False)
+    return g.db
+
+# After the request is completed (either successfully or with an error),
+# Flask automatically calls the close_db() function
+@app.teardown_appcontext
+def close_db(exception):
+    db = g.pop("db", None)
+    if db is not None:
+        db.close()
 
 
 # Tell Flask to call the after_request function (@app <- use flask)
@@ -33,12 +45,12 @@ def after_request(response):
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-
+    db = get_db()
+    cursor = db.cursor()
     user_id = session["user_id"]
-    username = db.execute(
-        "SELECT username FROM users WHERE id = ?", user_id
-    )
-    username = username[0]['username']
+    cursor.execute("SELECT username FROM users WHERE id = ?", (user_id,))
+    username = cursor.fetchall()
+    username = username[0][0]
 
     getData(user_id)
 
@@ -53,21 +65,21 @@ def index():
         if len(date) != 10:
             return apology("must provide correct year")
 
-        check_date = db.execute(
-            "SELECT date FROM journals WHERE user_id = ?", user_id
-        )
+        cursor.execute("SELECT date FROM journals WHERE user_id = ?", (user_id,))
+        check_date = cursor.fetchall()
 
 
         for dates in check_date:
-            if date in dates['date']:
-                db.execute(
+            if date in dates[0]:
+                cursor.execute(
                     "UPDATE journals SET feeling = ?, description = ? WHERE user_id = ? AND date = ?"
-                    ,feeling, description, user_id, date
-                )
+                    ,(feeling, description, user_id, date))
+                db.commit()
                 return redirect("/")
 
-        db.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?, ?)",
-                    user_id, date, feeling, description)
+        cursor.execute("INSERT INTO journals (user_id, date, feeling, description) VALUES(?, ?, ?, ?)",
+                    (user_id, date, feeling, description))
+        db.commit()
 
     return redirect("/")
 
@@ -86,13 +98,17 @@ def all_feeling_data():
 @login_required
 def calendar():
     user_id = session["user_id"]
-    username = db.execute(
-        "SELECT username FROM users WHERE id = ?", user_id
-    )
-    username = username[0]['username']
 
-    data = db.execute(
-        "SELECT date, feeling, description FROM journals WHERE user_id = ? ORDER BY date desc", user_id)
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT username FROM users WHERE id = ?", (user_id,))
+    username = cursor.fetchall()
+    username = username[0]
+
+    cursor.execute("SELECT date, feeling, description FROM journals WHERE user_id = ? ORDER BY date desc", (user_id,))
+    data = cursor.fetchall()
+    data = data
+
     return render_template("history.html", data=data, username=username)
 
 
@@ -113,14 +129,22 @@ def login():
         password = request.form.get("password")
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+        row = cursor.fetchall()
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
+        # Ensure username exists
+        if len(row) != 1:
+            return apology("invalid username and/or password", 403)
+
+        #check whether password is correct
+        hash = row[0][5]
+        if not check_password_hash(hash, password):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = row[0][0]
         user_id = session["user_id"]
         getData(user_id)
 
@@ -143,7 +167,10 @@ def register():
         password = request.form.get("password")
         confirm = request.form.get("confirm")
 
-        check = db.execute("SELECT * FROM users WHERE username = ?", username)
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+        check = cursor.fetchall()
 
         if len(check) != 0:
             return apology("username is already taken")
@@ -156,8 +183,9 @@ def register():
 
         hash = generate_password_hash(password)
 
-        db.execute("INSERT INTO users (first_name, last_name, birth, username, hash) VALUES(?, ?, ?, ?, ?)",
-                    first_name, last_name, birth, username, hash)
+        cursor.execute("INSERT INTO users (first_name, last_name, birth, username, hash) VALUES(?, ?, ?, ?, ?)",
+                    (first_name, last_name, birth, username, hash))
+        db.commit()
 
         return redirect("/login")
 
@@ -176,18 +204,23 @@ def reset_password():
         if new_password != confirm:
             return apology("could not confirm password")
 
-        check = db.execute("SELECT username, hash FROM users WHERE username = ?", username)
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT username, hash FROM users WHERE username = ?", (username,))
+        check = cursor.fetchall()
 
         if len(check) != 1:
             return apology("username does not exist")
 
-        if not check_password_hash(check[0]["hash"], old_password) or username in check:
+        hash = check[0][1]
+        if not check_password_hash(hash, old_password) or username in check:
             return apology("user does not exist. is your information correct?")
 
         hash = generate_password_hash(new_password)
 
-        db.execute("UPDATE users SET hash = ? WHERE username = ?",
-                    hash, username)
+        cursor.execute("UPDATE users SET hash = ? WHERE username = ?",
+                    (hash, username))
+        db.commit()
 
         return redirect("/login")
 
@@ -199,13 +232,15 @@ def logout():
 
 
 def getData(user_id):
-    all_feelings = db.execute(
-        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc"
-        ,user_id)
-    weekly_feelings = db.execute(
-        "SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc LIMIT 7"
-    , user_id)
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc"
+                    ,(user_id,))
+    weekly_feelings = cursor.fetchall()
 
+    cursor.execute("SELECT feeling FROM journals WHERE user_id = ? ORDER BY date desc LIMIT 7"
+                    ,(user_id,))
+    all_feelings = cursor.fetchall()
 
     weekly_feelings = calculator_feelings(weekly_feelings)
     all_feelings = calculator_feelings(all_feelings)
