@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from flask import Flask, g, redirect, render_template, request, session, json, send_from_directory
+from flask import Flask, json, request, session, g, redirect, render_template, send_from_directory
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -41,7 +41,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-
+# Home page
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
@@ -68,7 +68,6 @@ def index():
         cursor.execute("SELECT date FROM journals WHERE user_id = ?", (user_id,))
         check_date = cursor.fetchall()
 
-
         for dates in check_date:
             if date in dates[0]:
                 cursor.execute(
@@ -83,16 +82,20 @@ def index():
 
     return redirect("/")
 
-
+# Make JSON file for weekly report
+# json_directory: to determine the absolute path to the parent directory of the current Python script file
+# send_from_directory(): to send a file from a specific directory to the client
 @app.route('/weekly_feeling.json')
 def weekly_feeling_data():
     json_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     return send_from_directory(json_directory, 'weekly_feeling.json')
 
+# Make JSON file for all report
 @app.route('/all_feeling.json')
 def all_feeling_data():
     json_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     return send_from_directory(json_directory, 'all_feeling.json')
+
 
 @app.route("/history")
 @login_required
@@ -107,7 +110,6 @@ def calendar():
 
     cursor.execute("SELECT date, feeling, description FROM journals WHERE user_id = ? ORDER BY date desc", (user_id,))
     data = cursor.fetchall()
-    data = data
 
     return render_template("history.html", data=data, username=username)
 
@@ -136,12 +138,12 @@ def login():
 
         # Ensure username exists
         if len(row) != 1:
-            return apology("invalid username and/or password", 403)
+            return apology("invalid username", 403)
 
         #check whether password is correct
         hash = row[0][5]
         if not check_password_hash(hash, password):
-            return apology("invalid username and/or password", 403)
+            return apology("invalid password", 403)
 
         # Remember which user has logged in
         session["user_id"] = row[0][0]
