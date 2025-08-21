@@ -1,6 +1,7 @@
 # 🌈 JournalMuse
 
-https://github.com/user-attachments/assets/c92ee3d0-09be-4a2c-b003-951eaedd6f2c
+<img width="1439" height="685" alt="image" src="https://github.com/user-attachments/assets/a0a788ce-1281-4422-a2d1-ba5d4b942a9a" />
+
 
 [![Python](https://img.shields.io/badge/-Python-blue?logo=python&logoColor=yellow)](https://www.python.org/)
 [![Javascript](https://img.shields.io/badge/-Javascript-black?logo=javascript&logoColor=yellow)](https://developer.mozilla.org/en-US/docs/Web/JavaScript) 
